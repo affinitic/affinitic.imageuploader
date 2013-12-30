@@ -1,0 +1,104 @@
+<script type="text/javascript"
+        charset="utf-8"
+        tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++affinitic.imageuploader/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet"
+      type="text/css"
+      tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++affinitic.imageuploader/jquery.Jcrop.min.css" />
+
+
+<div tal:define="filename request/filename | nothing;
+                 height request/height | nothing;
+                 width request/width | nothing;
+                 desiredHeight request/desiredHeight | nothing;
+                 desiredWidth request/desiredWidth | nothing;
+                 redirectUrl request/redirectUrl | nothing;
+                 destination request/destination | nothing;
+                 layoutmaxwidth request/layoutmaxwidth | nothing;
+                 mustResize python: int(height) != int(desiredHeight) or int(width) != int(desiredWidth)">
+
+    <script type="text/javascript" tal:content="string:var desiredHeight=${desiredHeight}; var desiredWidth=${desiredWidth};"></script>
+    <script type="text/javascript">
+      jQuery(function($){
+        $('#image-to-crop').Jcrop({
+            aspectRatio: desiredWidth/desiredHeight,
+            onSelect: updateCoords,
+            onChange: updateCoords,
+            setSelect: [0, 0, desiredWidth, desiredHeight]
+        });
+        function updateCoords(c)
+          {
+            $('#x').val(c.x);
+            $('#y').val(c.y);
+            $('#w').val(c.w);
+            $('#h').val(c.h);
+          };
+      });
+    </script>
+
+    <div tal:condition="not: mustResize">
+
+       <p>L'image a les dimensions requises.</p>
+
+       <form method="post" action="save-image">
+
+           <img src="" id="image"
+                alt="Image"
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${destination}/${filename}-tmp.png" />
+
+           <input id="x" type="hidden" name="x" value="0" />
+           <input id="y" type="hidden" name="y" value="0" />
+           <input id="w" type="hidden" name="w" value="" tal:attributes="value desiredWidth" />
+           <input id="h" type="hidden" name="h" value="" tal:attributes="value desiredHeight" />
+           <input type="hidden" name="filename" value="" tal:attributes="value filename" />
+           <input type="hidden" name="desiredWidth" value="" tal:attributes="value desiredWidth" />
+           <input type="hidden" name="desiredHeight" value="" tal:attributes="value desiredHeight" />
+           <input type="hidden" name="destination" value="" tal:attributes="value destination" />
+           <input type="hidden" name="redirectUrl" value="" tal:attributes="value redirectUrl" />
+           <input type="hidden" name="layoutmaxwidth" value="" tal:attributes="value layoutmaxwidth" />
+
+           <br /><br />
+           <input type="submit" value="Sauvegarder l'image">
+
+       </form>
+    </div>
+
+    <div tal:condition="mustResize">
+
+       <p>Vous devez couper l'image pour qu'elle ait les dimensions nécessaires.</p>
+
+       <form onsubmit="return checkCoords();" method="post" action="save-image">
+
+           <tal:if condition="python: int(width) > int(layoutmaxwidth)">
+               <img src="" id="image-to-crop"
+                    alt="Image à découper"
+                    width=""
+                    tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${destination}/${filename}-tmp.png;
+                                    width layoutmaxwidth" />
+               <input type="hidden" name="scale" value="" tal:attributes="value layoutmaxwidth">
+           </tal:if>
+
+           <tal:if condition="python: int(width) <= int(layoutmaxwidth)">
+               <img src="" id="image-to-crop"
+                    alt="Image à découper"
+                    tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${destination}/${filename}-tmp.png" />
+               <input type="hidden" name="scale" value="">
+           </tal:if>
+
+           <input id="x" type="hidden" name="x" value="">
+           <input id="y" type="hidden" name="y" value="">
+           <input id="w" type="hidden" name="w" value="">
+           <input id="h" type="hidden" name="h" value="">
+           <input type="hidden" name="filename" value="" tal:attributes="value filename" />
+           <input type="hidden" name="desiredWidth" value="" tal:attributes="value desiredWidth" />
+           <input type="hidden" name="desiredHeight" value="" tal:attributes="value desiredHeight" />
+           <input type="hidden" name="destination" value="" tal:attributes="value destination" />
+           <input type="hidden" name="redirectUrl" value="" tal:attributes="value redirectUrl" />
+           <input type="hidden" name="layoutmaxwidth" value="" tal:attributes="value layoutmaxwidth" />
+
+           <br />
+           <input type="submit" value="Couper et sauvegarder l'image">
+
+       </form>
+    </div>
+
+</div>

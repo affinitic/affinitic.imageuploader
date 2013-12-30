@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+<body>
+
+  <div metal:define-macro="affinitic-image-uploader"
+       tal:define="filename filename|nothing;
+                   width width|nothing;
+                   height height|nothing;
+                   dest_localfs dest_localfs|nothing;
+                   redirectUrl redirect|nothing;
+                   layoutmaxwidth layoutmaxwidth|nothing">
+
+    <script type="text/javascript"
+            charset="utf-8"
+            tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++affinitic.imageuploader/jquery.ui.widget.js"></script>
+    <script type="text/javascript"
+            charset="utf-8"
+            tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++affinitic.imageuploader/jquery.iframe-transport.js"></script>
+    <script type="text/javascript"
+            charset="utf-8"
+            tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++affinitic.imageuploader/jquery.fileupload.js"></script>
+    <script type="text/javascript"
+            charset="utf-8"
+            tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++affinitic.imageuploader/imageuploader.js"></script>
+    <link rel="stylesheet"
+          type="text/css"
+          tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++affinitic.imageuploader/imageuploader.css" />
+
+    <div id="error-message" class="error-center" style="display:none">
+        Error message filled by javascript
+    </div>
+
+    <div id="image-edition-fieldset">
+
+        <form method="post"
+              id="image-upload-form">
+
+            <label for="file">Modifier l'image :</label>
+            <input id="fileupload"
+                   type="file"
+                   name="file"
+                   size="30"
+                   accept="image/gif, image/jpeg, image/png">
+
+            <br /><br />
+
+            <div id="progress"
+                 style="display:none">
+                <div class="bar"></div>
+            </div>
+            <br />
+
+            <input type="hidden"
+                   name="filename"
+                   value=""
+                   tal:attributes="value filename" />
+
+            <input type="hidden"
+                   name="width"
+                   value=""
+                   tal:attributes="value width" />
+
+            <input type="hidden"
+                   name="height"
+                   value=""
+                   tal:attributes="value height" />
+
+            <input type="hidden"
+                   name="dest_localfs"
+                   value=""
+                   tal:attributes="value dest_localfs" />
+
+            <input type="hidden"
+                   name="redirectUrl"
+                   value=""
+                   tal:attributes="value redirectUrl" />
+
+            <input type="hidden"
+                   name="layoutmaxwidth"
+                   value=""
+                   tal:attributes="value layoutmaxwidth" />
+
+        </form>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

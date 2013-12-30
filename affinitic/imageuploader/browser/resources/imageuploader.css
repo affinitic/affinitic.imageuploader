@@ -1,0 +1,40 @@
+div.error-center {
+    border: 1px solid red;
+    color: red;
+    font-weight: bold;
+    padding: 8px;
+    background-color: #FFE4E4;
+    border-radius: 5px 5px 5px 5px;
+    margin: 20px auto;
+    text-align: center;
+    width: 60%;
+}
+
+div.info-center {
+    border: 1px solid green;
+    color: green;
+    font-weight: bold;
+    padding: 8px;
+    background-color: #DDFBDB;
+    border-radius: 5px 5px 5px 5px;
+    margin: 20px auto;
+    text-align: center;
+    width: 60%;
+}
+
+#progress {
+    position: relative;
+    width: 400px;
+    border: 1px solid #ddd;
+    padding: 1px;
+    border-radius: 3px;
+    margin: auto;
+}
+
+#progress .bar {
+    background-color: #B4F5B4;
+    width: 0%;
+    height: 20px;
+    border-radius: 3px;
+    text-align: center;
+}

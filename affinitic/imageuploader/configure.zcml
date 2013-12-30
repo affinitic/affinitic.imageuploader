@@ -1,0 +1,15 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:genericsetup="http://namespaces.zope.org/genericsetup">
+
+  <include package="five.grok" />
+  <include package=".browser" />
+
+  <genericsetup:registerProfile
+      name="default"
+      title="Affinitic Image Uploader"
+      directory="profiles/default"
+      description="Affinitic Image Uploader"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>

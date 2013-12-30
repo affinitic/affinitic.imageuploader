@@ -23,7 +23,9 @@ setup(name='affinitic.imageuploader',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'five.grok',
           'Products.LocalFS',
+          'simplejson',
           ],
       extras_require=dict(
           scripts=[]),

@@ -1,0 +1,32 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:grok="http://namespaces.zope.org/grok"
+           xmlns:browser="http://namespaces.zope.org/browser">
+
+  <include package="Products.CMFCore" file="configure.zcml" />
+
+  <grok:grok package=".imageupload" />
+
+  <browser:page
+      name="UploaderSample_view"
+      for="*"
+      permission="cmf.ModifyPortalContent"
+      template="templates/example.pt"
+      layer="..interfaces.IImageUploader"
+      />
+
+  <browser:page
+      name="affinitic.imageuploader.macros"
+      for="*"
+      permission="cmf.ModifyPortalContent"
+      template="templates/macros.pt"
+      layer="..interfaces.IImageUploader"
+      />
+
+  <browser:resourceDirectory
+      name="affinitic.imageuploader"
+      directory="resources/"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IImageUploader"
+      />
+
+</configure>
