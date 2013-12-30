@@ -38,6 +38,11 @@
         <form method="post"
               id="image-upload-form">
 
+           <img src="" id="image"
+                alt="Image"
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${dest_localfs}/${filename}.png" />
+            <br />
+
             <label for="file">Modifier l'image :</label>
             <input id="fileupload"
                    type="file"
