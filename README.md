@@ -27,7 +27,6 @@ Sample code and live demo can be found on http://localhost:8080/yourplone/@@Uplo
 
 Known issues
 ------------
-- we should check for existing image instead of trying to always display it
 - there are no tests
 
 Credits
