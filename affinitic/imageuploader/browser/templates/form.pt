@@ -36,14 +36,20 @@
     <div id="image-edition-fieldset">
 
         <form method="post"
-              id="image-upload-form">
+              id="image-upload-form"
+              tal:define="formView nocall:context/@@affinitic.imageuploader.macros;
+                          hasExistingImage python:formView.hasExistingImage(dest_localfs, filename)">
 
            <img src="" id="image"
                 alt="Image"
-                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${dest_localfs}/${filename}.png" />
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${dest_localfs}/${filename}.png"
+                tal:condition="hasExistingImage" />
             <br />
 
-            <label for="file">Modifier l'image :</label>
+            <label for="file">
+                <tal-if tal:condition="hasExistingImage">Modifier l'image :</tal-if>
+                <tal-else tal:condition="not: hasExistingImage">Ajouter une image :</tal-else>
+            </label>
             <input id="fileupload"
                    type="file"
                    name="file"

@@ -17,10 +17,24 @@ from Products.CMFCore.utils import getToolByName
 grok.templatedir('templates')
 
 
-class GalleryUpload(grok.View):
+class MainForm(grok.View):
+    grok.context(zope.interface.Interface)
+    grok.name(u'affinitic.imageuploader.macros')
+    grok.require('cmf.ModifyPortalContent')
+    grok.template('form')
+
+    def hasExistingImage(self, folder, fileName):
+        utool = getToolByName(self.context, 'portal_url')
+        portal = utool.getPortalObject()
+        localFS = getattr(portal, folder)
+        path = os.path.join(localFS.basepath, '%s.png' % fileName)
+        return os.path.exists(path)
+
+
+class ImageUpload(grok.View):
     grok.context(zope.interface.Interface)
     grok.name(u'upload-image')
-    grok.require('zope2.Public')
+    grok.require('cmf.ModifyPortalContent')
 
     def render(self):
         pass
@@ -52,8 +66,11 @@ class GalleryUpload(grok.View):
         utool = getToolByName(self.context, 'portal_url')
         portal = utool.getPortalObject()
         imageStorage = getattr(portal, destination)
-        destinationFS = '%s/%s-tmp.png' % (imageStorage.basepath, fileName)
+        destinationFS = os.path.join(imageStorage.basepath,
+                                     '%s-tmp.png' % fileName)
         ImageFile.MAXBLOCK = width * height
+        if os.path.exists(destinationFS):
+            os.unlink(destinationFS)
         img.save(destinationFS, "PNG")
         self.request.response.setHeader('content-type', 'text/x-json')
         self.request.response.setHeader('Cache-Control', 'no-cache')
@@ -69,17 +86,17 @@ class GalleryUpload(grok.View):
                                  'status': 1})
 
 
-class GalleryCrop(grok.View):
+class ImageCrop(grok.View):
     grok.context(zope.interface.Interface)
     grok.name(u'crop-image')
-    grok.require('zope2.Public')
+    grok.require('cmf.ModifyPortalContent')
     grok.template('imagecrop')
 
 
-class GallerySave(grok.View):
+class ImageSave(grok.View):
     grok.context(zope.interface.Interface)
     grok.name(u'save-image')
-    grok.require('zope2.Public')
+    grok.require('cmf.ModifyPortalContent')
 
     def render(self):
         pass
@@ -105,8 +122,8 @@ class GallerySave(grok.View):
         utool = getToolByName(self.context, 'portal_url')
         portal = utool.getPortalObject()
         imageStorage = getattr(portal, destination)
-        origin = '%s/%s-tmp.png' % (imageStorage.basepath, fileName)
-        destination = '%s/%s.png' % (imageStorage.basepath, fileName)
+        origin = os.path.join(imageStorage.basepath, '%s-tmp.png' % fileName)
+        destination = os.path.join(imageStorage.basepath, '%s.png' % fileName)
         img = Image.open(origin)
 
         if scale:

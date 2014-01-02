@@ -9,13 +9,13 @@
 
         <h1>Example d'upload d'une image</h1>
 
-        <h2>Utilisez ce code dans votre template (adaptez les variables) :</h2>
+        <h2>Utilisez ce code dans votre template (n'oubliez pas d'adapter les variables) :</h2>
         <pre>&lt;tal:macro tal:define=&quot;filename string:test;
-                                dest_localfs string:test-fs;
-                                width string:500;
-                                height string:450;
-                                layoutmaxwidth string:1000;
-                                redirect string:${context/@@plone_portal_state/portal_url}/contact-info&quot;&gt;
+                       dest_localfs string:test-fs;
+                       width string:500;
+                       height string:450;
+                       layoutmaxwidth string:1000;
+                       redirect string:${context/@@plone_portal_state/portal_url}&quot;&gt;
     &lt;div metal:use-macro=&quot;context/@@affinitic.imageuploader.macros/affinitic-image-uploader&quot; /&gt;
 &lt;/tal:macro&gt;</pre>
 
@@ -25,7 +25,7 @@
                                width string:500;
                                height string:450;
                                layoutmaxwidth string:1000;
-                               redirect string:${context/@@plone_portal_state/portal_url}/contact-info">
+                               redirect string:${context/@@plone_portal_state/portal_url}">
 
             <div metal:use-macro="context/@@affinitic.imageuploader.macros/affinitic-image-uploader" />
         </tal:macro>
