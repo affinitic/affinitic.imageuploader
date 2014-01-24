@@ -140,8 +140,9 @@ class ImageSave(grok.View):
             os.unlink(destination)
         img.save(destination, "PNG")
         img = Image.open(destination)
-        img = img.resize((int(desiredWidth), int(desiredHeight)),
-                         Image.ANTIALIAS)
+
+        #img = img.resize((int(desiredWidth), int(desiredHeight)),
+        #                 Image.ANTIALIAS)
         img.save(destination, "PNG")
         os.unlink(origin)
         self.request.response.redirect(redirectUrl)

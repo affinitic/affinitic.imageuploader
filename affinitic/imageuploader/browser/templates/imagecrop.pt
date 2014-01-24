@@ -20,7 +20,7 @@
     <script type="text/javascript">
       jQuery(function($){
         $('#image-to-crop').Jcrop({
-            aspectRatio: desiredWidth/desiredHeight,
+            /*aspectRatio: desiredWidth/desiredHeight,XXXXXXXXXXXXXXXXXXXXXXXX*/
             onSelect: updateCoords,
             onChange: updateCoords,
             setSelect: [0, 0, desiredWidth, desiredHeight]
@@ -74,7 +74,7 @@
                     width=""
                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${destination}/${filename}-tmp.png;
                                     width layoutmaxwidth" />
-               <input type="hidden" name="scale" value="" tal:attributes="value layoutmaxwidth">
+               <input type="hidden" name="scale" value="" tal:attributes="value layoutmaxwidth" />
            </tal:if>
 
            <tal:if condition="python: int(width) <= int(layoutmaxwidth)">
