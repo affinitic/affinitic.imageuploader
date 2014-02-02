@@ -104,8 +104,10 @@ class ImageSave(grok.View):
     def __call__(self):
         fields = self.request.form
         fileName = fields.get('filename')
-        desiredWidth = fields.get('desiredWidth')
-        desiredHeight = fields.get('desiredHeight')
+        #desiredWidth = fields.get('desiredWidth')
+        #desiredHeight = fields.get('desiredHeight')
+        desiredWidth = 300
+        desiredHeight = 200
         destination = fields.get('destination')
         redirectUrl = fields.get('redirectUrl')
         layoutMaxWidth = fields.get('layoutmaxwidth')
@@ -141,8 +143,8 @@ class ImageSave(grok.View):
         img.save(destination, "PNG")
         img = Image.open(destination)
 
-        #img = img.resize((int(desiredWidth), int(desiredHeight)),
-        #                 Image.ANTIALIAS)
+        img = img.resize((int(desiredWidth), int(desiredHeight)),
+                         Image.ANTIALIAS)
         img.save(destination, "PNG")
         os.unlink(origin)
         self.request.response.redirect(redirectUrl)
